@@ -43,7 +43,7 @@ const Sidebar = () => {
                         ({onlineUsers.length - 1} online)
                     </span>
                 </div>
-                <div className="overflow-y-auto w-full py-3">
+                <div className="overflow-y-scroll h-[calc(100vh-14rem)] w-full flex flex-col py-3">
                     {filteredUsers.map((user) => (
                         <button
                             key={user._id}
