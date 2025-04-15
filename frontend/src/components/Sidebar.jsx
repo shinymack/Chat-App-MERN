@@ -18,14 +18,14 @@ const Sidebar = () => {
         : users;
     if (isUsersLoading) return <SidebarSkeleton />;
     return (
-        <aside className={`h-full lg:w-72 w-[100vw] sm:border-r border-base-300 flex flex-col transition-all duration-200 ${selectedUser ?
-                                     "hidden"
+        <div className={`h-full sm:w-72 sm:border-r border-base-300  flex-col transition-all duration-200 ${selectedUser ?
+                                    "hidden sm:flex w-[100vw] "
                                     : ""}`}>
-            <div className="border-b border-base-300 w-full p-5">
+            <div className="border-b border-base-300  p-5">
                 <div className="flex items-center gap-2">
                     <Users className="size-6"></Users>
                     <span className="font-medium  lg:block">
-                        Contacts
+                        Friends
                     </span>
                 </div>
                 {/* Online toggle filter remaining */}
@@ -50,7 +50,7 @@ const Sidebar = () => {
                         <button
                             key={user._id}
                             onClick={() => setSelectedUser(user)}
-                            className={`w-full p-3 flex items-center gap-3 hover:bg-base-300 transition-colors
+                            className={`sm:w-full w-[88vw] p-3 flex items-center gap-3 hover:bg-base-300 transition-colors
                             ${
                                 selectedUser?._id === user._id
                                     ? "bg-base-300 ring-1 ring-base-300"
@@ -84,7 +84,7 @@ const Sidebar = () => {
                     <div className="text-center text-zinc-500 py-4">No online users</div>
                 )}
             </div>
-        </aside>
+        </div>
     );
 };
 
