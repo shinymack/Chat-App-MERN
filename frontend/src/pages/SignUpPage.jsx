@@ -33,7 +33,8 @@ const SignUpPage = () => {
     if(success===true) signup(formData);
   };
   
-  const googleAuthUrl = 'http://localhost:5001/api/auth/google';
+  const backendDomain = import.meta.env.VITE_BACKEND_URL;
+  const googleAuthUrl = `${backendDomain}/api/auth/google`;
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
       {/* left side */}
