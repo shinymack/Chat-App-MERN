@@ -5,14 +5,14 @@ import { Users } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 
 const Sidebar = () => {
-    const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } =
+    const { getFriends, users, selectedUser, setSelectedUser, isUsersLoading } =
         useChatStore();
 
     const { onlineUsers } = useAuthStore();
     const [showOnlineOnly, setShowOnlineOnly] = useState(false);
     useEffect(() => {
-        getUsers();
-    }, [getUsers]);
+        getFriends();
+    }, [getFriends]);
     const filteredUsers = showOnlineOnly
         ? users.filter((user) => onlineUsers.includes(user._id))
         : users;
@@ -42,7 +42,7 @@ const Sidebar = () => {
                         <span className="text-sm">Show online only</span>
                     </label>
                     <span className="text-xs text-zinc-500">
-                        ({onlineUsers.length - 1} online)
+                          ({users.filter(friend => onlineUsers.includes(friend._id)).length} online)
                     </span>
                 </div>
                 <div className="overflow-y-scroll h-[calc(100vh-14rem)] w-full flex flex-col py-3">
@@ -60,7 +60,7 @@ const Sidebar = () => {
                             <div className="relative mx-0">
                                 <img
                                     src={user.profilePic || "/avatar.png"}
-                                    alt={user.name}
+                                    alt={user.username}
                                     className="size-12 object-cover rounded-full"
                                 />
                                 {onlineUsers.includes(user._id) && (
@@ -69,7 +69,7 @@ const Sidebar = () => {
                             </div>
                             <div className=" block text-left min-w-0">
                                 <div className=" font-medium truncate">
-                                    {user.fullName}
+                                    {user.username}
                                 </div>
                                 <div className="text-sm text-zinc-400">
                                     {onlineUsers.includes(user._id)
@@ -81,7 +81,7 @@ const Sidebar = () => {
                     ))}
                 </div>
                 {filteredUsers.length == 0 && (
-                    <div className="text-center text-zinc-500 py-4">No online users</div>
+                    <div className="text-center text-zinc-500 py-4">No online friends</div>
                 )}
             </div>
         </div>

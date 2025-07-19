@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
+import friendRoutes from "./routes/friend.route.js";
 
 import path from "path";
 
@@ -11,8 +12,15 @@ import cookieParser from "cookie-parser";
 import { connectDB } from "./lib/db.js";
 import { app, server } from "./lib/socket.js";
 
+import session from "express-session";
+import passport from "passport";
+import { configurePassport } from "./lib/passport.config.js";
+
 const __dirname = path.resolve();
 dotenv.config();
+
+configurePassport();
+
 app.use(cookieParser());
 app.use(express.json({limit : '2mb'}));
 app.use(express.urlencoded({ limit: '2mb', extended: true }));
@@ -21,10 +29,24 @@ app.use(cors({
     credentials: true,
 }));
 
+app.use(session({
+    secret: process.env.SESSION_SECRET, 
+    resave: false,
+    saveUninitialized: false, 
+    cookie: {
+        secure: process.env.NODE_ENV === "production", // true in production (HTTPS)
+        httpOnly: true,
+        maxAge: 7 * 24 * 60 * 60 * 1000 
+        // sameSite: 'lax' // or 'none' if backend and frontend are on different domains in prod
+    }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());  
 
 app.use("/api/auth", authRoutes );
 app.use("/api/messages", messageRoutes );
-
+app.use("/api/friends", friendRoutes);
 
 
 const PORT = process.env.PORT;

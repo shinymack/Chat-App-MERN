@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 import AuthImagePattern from "../components/AuthImagePattern";
 import toast from "react-hot-toast";
 
-
+import { FcGoogle } from "react-icons/fc";
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    fullName: "",
+    username: "",
     email: "",
     password: "",
   });
@@ -17,7 +17,7 @@ const SignUpPage = () => {
   const { signup, IsSigningUp } = useAuthStore();
 
   const validateForm = () => {
-    if(!formData.fullName.trim()) return toast.error("Full name is required");
+    if(!formData.username.trim()) return toast.error("Username is required");
     if(!formData.email.trim()) return toast.error("Email is required");
     if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid email format");
     if (!formData.password) return toast.error("Password is required");
@@ -33,7 +33,7 @@ const SignUpPage = () => {
     if(success===true) signup(formData);
   };
   
-
+  const googleAuthUrl = 'http://localhost:5001/api/auth/google';
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
       {/* left side */}
@@ -56,7 +56,7 @@ const SignUpPage = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="form-control">
               <label className="label">
-                <span className="label-text font-medium">Full Name</span>
+                <span className="label-text font-medium">Username</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -65,9 +65,9 @@ const SignUpPage = () => {
                 <input
                   type="text"
                   className={`input input-bordered w-full pl-10`}
-                  placeholder="John Doe"
-                  value={formData.fullName}
-                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                  placeholder="johndoe"
+                  value={formData.username}
+                  onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                 />
               </div>
             </div>
@@ -130,6 +130,15 @@ const SignUpPage = () => {
               )}
             </button>
           </form>
+          <div className="divider text-base-content/60 my-4">OR</div>
+
+          <a
+            href={googleAuthUrl} // Link to your backend Google auth route
+            className="btn btn-primary btn-outline w-full" 
+          >
+            <FcGoogle className="size-5 mr-2" /> 
+            Sign up with Google
+          </a>
 
           <div className="text-center">
             <p className="text-base-content/60">
@@ -141,7 +150,7 @@ const SignUpPage = () => {
           </div>
         </div>
       </div>
-
+      
       {/* right side */}
 
       <AuthImagePattern

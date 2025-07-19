@@ -3,19 +3,21 @@ import { useAuthStore } from "../store/useAuthStore";
 import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import AuthImagePattern from "../components/AuthImagePattern";
+import { FcGoogle } from "react-icons/fc";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    email:"",
-    password:"",
+    email: "",
+    password: "",
   })
-  const {login , isLoggingIn} = useAuthStore();
+  const { login, isLoggingIn } = useAuthStore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     login(formData);
   }
+  const googleAuthUrl = 'http://localhost:5001/api/auth/google';
   return (
     <div className="h-screen grid lg:grid-cols-2">
       {/* Left Side - Form */}
@@ -43,7 +45,7 @@ const LoginPage = () => {
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-base-content/40" />
+                  <Mail className="h-5 w-5 text opacity-40" />
                 </div>
                 <input
                   type="email"
@@ -95,6 +97,15 @@ const LoginPage = () => {
               )}
             </button>
           </form>
+          <div className="divider text-base-content/60 my-4">OR</div>
+
+          <a
+            href={googleAuthUrl} // Link to your backend Google auth route
+            className="btn btn-primary btn-outline w-full"
+          >
+            <FcGoogle className="size-5 mr-2" />
+            Sign in with Google
+          </a>
 
           <div className="text-center">
             <p className="text-base-content/60">

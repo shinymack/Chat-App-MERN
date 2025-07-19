@@ -2,10 +2,13 @@
 
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
-import { LogOut, MessageSquare, Settings, User } from "lucide-react";
+import { LogOut, MessageSquare, Settings, User, Users } from "lucide-react";
+import { useChatStore } from "../store/useChatStore";
 
 const Navbar = () => {
   const { logout, authUser } = useAuthStore();
+  const { toggleFriendsBox } = useChatStore(); 
+
   return (
     <header
       className=" bg-base-100 border-b border-base-300 fixed w-full top-0 z-40
@@ -24,7 +27,11 @@ const Navbar = () => {
               <h1 className="text-lg font-bold">Chatty</h1>
             </Link>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
+            <button className="btn btn-sm gap-2" onClick={toggleFriendsBox}>
+              <Users className="size-5" />
+              <span className="hidden sm:inline">Friends</span>
+            </button>
             <Link to={"/settings"}
             className={`btn btn-sm gap-2 transition-colors`}>
             <Settings className="size-4"/>
@@ -38,7 +45,7 @@ const Navbar = () => {
                   <span className="hidden sm:inline">Profile</span>
                 </Link>
 
-                <button className="flex gap-2 items-center" onClick={logout}>
+                <button className="btn btn-sm flex gap-2 items-center" onClick={logout}>
                   <LogOut className="size-5" />
                   <span className="hidden sm:inline">Logout</span>
                 </button>
