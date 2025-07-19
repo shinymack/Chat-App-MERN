@@ -119,18 +119,20 @@ export const checkAuth = (req, res) => {
 
 
 export const googleAuthCallback = async (req, res) => {
+ const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+
     try {
-        if (!req.user) { // User not authenticated by Passport
-            return res.redirect('http://localhost:5173/login?error=google_auth_failed');
+        if (!req.user) {
+            return res.redirect(`${frontendUrl}/login?error=google_auth_failed`);
         }
 
         generateToken(req.user._id, res);
 
-        res.redirect('http://localhost:5173/');
+        res.redirect(frontendUrl);
 
     } catch (error) {
         console.error("Error in googleAuthCallback: ", error.message);
-        res.redirect('http://localhost:5173/login?error=google_auth_processing_error');
+        res.redirect(`${frontendUrl}/login?error=google_auth_processing_error`);
     }
 };
 
