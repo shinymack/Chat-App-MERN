@@ -6,7 +6,7 @@ user_socket_map: Dict[str, str] = {} # {userId: socketId}
 
 sio = socketio.AsyncServer(
     async_mode='asgi',
-    cors_allowed_origins=["http://localhost:5173", "https://chatty-osx6.onrender.com"]
+    cors_allowed_origins=["http://localhost:5173", "https://chatty-osx6.onrender.com", "https://shinychat.onrender.com"]
 )
 
 def get_receiver_socket_id(receiver_id: str) -> Optional[str]:
