@@ -6,56 +6,57 @@ import { LogOut, MessageSquare, Settings, User, Users } from "lucide-react";
 import { useChatStore } from "../store/useChatStore";
 
 const Navbar = () => {
-  const { logout, authUser } = useAuthStore();
-  const { toggleFriendsBox } = useChatStore(); 
+    const { logout, authUser } = useAuthStore();
+    const { toggleFriendsBox } = useChatStore();
 
-  return (
-    <header
-      className=" bg-base-100 border-b border-base-300 fixed w-full top-0 z-40
+    return (
+        <header
+            className=" bg-base-100 border-b border-base-300 fixed w-full top-0 z-40
         backdrop-blur-lg bg-base-100/80"
-    >
-      <div className="container mx-auto px-4 h-16">
-        <div className="flex items-center justify-between h-full">
-          <div className="flex items-center gap-8">
-            <Link
-              to="/"
-              className="flex items-center gap-2.5 hover:opacity-80 transition-all"
-            >
-              <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
-                <MessageSquare className="size-5 text-primary"></MessageSquare>
-              </div>
-              <h1 className="text-lg font-bold">ShinyChat</h1>
-            </Link>
-          </div>
-          <div className="flex items-center gap-4">
-            <button className="btn btn-sm gap-2" onClick={toggleFriendsBox}>
-              <Users className="size-5" />
-              <span className="hidden sm:inline">Friends</span>
-            </button>
-            <Link to={"/settings"}
-            className={`btn btn-sm gap-2 transition-colors`}>
-            <Settings className="size-4"/>
-            <span className="hidden sm:inline">Settings</span>
+        >
+            <div className="container mx-auto px-4 h-16">
+                <div className="flex items-center justify-between h-full">
+                    <div className="flex items-center gap-8">
+                        <Link
+                            to="/"
+                            className="flex items-center gap-2.5 hover:opacity-80 transition-all"
+                        >
+                            <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
+                                <MessageSquare className="size-5 text-primary"></MessageSquare>
+                            </div>
+                            <h1 className="text-lg font-bold">ShinyChat</h1>
+                        </Link>
+                    </div>
+                    <div className="flex items-center gap-4">
 
-            </Link>
-            {authUser && (
-              <>
-                <Link to={"/profile"} className={`btn btn-sm gap-2`}>
-                  <User className="size-5" />
-                  <span className="hidden sm:inline">Profile</span>
-                </Link>
+                        <Link to={"/settings"}
+                            className={`btn btn-sm gap-2 transition-colors`}>
+                            <Settings className="size-4" />
+                            <span className="hidden sm:inline">Settings</span>
 
-                <button className="btn btn-sm flex gap-2 items-center" onClick={logout}>
-                  <LogOut className="size-5" />
-                  <span className="hidden sm:inline">Logout</span>
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-    </header>
-  );
+                        </Link>
+                        {authUser && (
+                            <>
+                                <button className="btn btn-sm gap-2" onClick={toggleFriendsBox}>
+                                    <Users className="size-5" />
+                                    <span className="hidden sm:inline">Friends</span>
+                                </button>
+                                <Link to={"/profile"} className={`btn btn-sm gap-2`}>
+                                    <User className="size-5" />
+                                    <span className="hidden sm:inline">Profile</span>
+                                </Link>
+
+                                <button className="btn btn-sm flex gap-2 items-center" onClick={logout}>
+                                    <LogOut className="size-5" />
+                                    <span className="hidden sm:inline">Logout</span>
+                                </button>
+                            </>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </header>
+    );
 };
 
 export default Navbar;
